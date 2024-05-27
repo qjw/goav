@@ -33,7 +33,7 @@ func (ctx *SwrContext) SwrAllocSetOpts(outChLayout int64, outSampleFmt AvSampleF
 
 // SwrFree Context destructor functions. Free the given Context and set the pointer to NULL.
 func (ctx *SwrContext) SwrFree() {
-	C.swr_free((**C.struct_SwrContext)(unsafe.Pointer(ctx)))
+	C.swr_free((**C.struct_SwrContext)(unsafe.Pointer(&ctx)))
 }
 
 // SwrClose Closes the context so that swr_is_initialized() returns 0.
