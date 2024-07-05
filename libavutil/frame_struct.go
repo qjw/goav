@@ -14,6 +14,11 @@ func (frame *AvFrame) Data() **uint8 {
 	return (**uint8)(unsafe.Pointer(&frame.data[0]))
 }
 
+// Data Return data
+func (frame *AvFrame) ExtendedData() **uint8 {
+	return (**uint8)(unsafe.Pointer(frame.extended_data))
+}
+
 // Linesize Return linesize
 func (frame *AvFrame) Linesize() *int32 {
 	return (*int32)(unsafe.Pointer(&frame.linesize[0]))
@@ -63,6 +68,50 @@ func (frame *AvFrame) SetInfo(width int, height int, pixFmt int) (err error) {
 		return
 	}
 	return
+}
+
+func (frame *AvFrame) NbSamples() int {
+	return (int)(frame.nb_samples)
+}
+
+func (frame *AvFrame) Width() int {
+	return (int)(frame.width)
+}
+
+func (frame *AvFrame) Height() int {
+	return (int)(frame.height)
+}
+
+func (frame *AvFrame) Format() int {
+	return (int)(frame.format)
+}
+
+func (frame *AvFrame) KeyFrame() int {
+	return (int)(frame.key_frame)
+}
+
+func (frame *AvFrame) SampleRate() int {
+	return (int)(frame.sample_rate)
+}
+
+func (frame *AvFrame) Quality() int {
+	return (int)(frame.quality)
+}
+
+func (frame *AvFrame) Channels() int {
+	return (int)(frame.channels)
+}
+
+func (frame *AvFrame) ChannelLayout() uint64 {
+	return uint64(frame.channel_layout)
+}
+
+func (frame *AvFrame) PktPts() int64 {
+	return int64(frame.pkt_pts)
+}
+
+func (frame *AvFrame) PktDts() int64 {
+	return int64(frame.pkt_dts)
 }
 
 // FrameData return data
