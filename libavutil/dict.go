@@ -48,14 +48,14 @@ func (d *AvDictionary) AvDictCount() int {
 }
 
 // AvDictSet Set the given entry in *pm, overwriting an existing entry.
-func (d *AvDictionary) AvDictSet(key, value string, flags int) int {
+func (d *AvDictionary) AvDictSet(key, value string, flags int) (*AvDictionary, int) {
 	cKey := C.CString(key)
 	defer C.free(unsafe.Pointer(cKey))
 
 	cValue := C.CString(value)
 	defer C.free(unsafe.Pointer(cValue))
 
-	return int(C.av_dict_set((**C.struct_AVDictionary)(unsafe.Pointer(&d)),
+	return d, int(C.av_dict_set((**C.struct_AVDictionary)(unsafe.Pointer(&d)),
 		cKey, cValue, C.int(flags)))
 }
 
