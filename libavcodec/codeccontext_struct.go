@@ -803,6 +803,12 @@ func (cctx *AvCodecContext) SubtitleHeaderSize() int {
 	return int(cctx.subtitle_header_size)
 }
 
+// SubtitleHeader Return subtitle_header
+func (cctx *AvCodecContext) SubtitleHeader() string {
+	charStr := (*C.char)(unsafe.Pointer(cctx.subtitle_header))
+	return (C.GoString)(charStr)
+}
+
 // SideDataOnlyPackets Return side_data_only_packets
 func (cctx *AvCodecContext) SideDataOnlyPackets() int {
 	return int(cctx.side_data_only_packets)
