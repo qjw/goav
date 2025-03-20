@@ -1,9 +1,9 @@
 // Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 // Giorgis (habtom@giorgis.io)
 
-//Package libavformat provides some generic global options, which can be set on all the muxers and demuxers.
-//In addition each muxer or demuxer may support so-called private options, which are specific for that component.
-//Supported formats (muxers and demuxers) provided by the libavformat library
+// Package libavformat provides some generic global options, which can be set on all the muxers and demuxers.
+// In addition each muxer or demuxer may support so-called private options, which are specific for that component.
+// Supported formats (muxers and demuxers) provided by the libavformat library
 package libavformat
 
 //#cgo pkg-config: libavformat libavcodec libavutil libavdevice libavfilter libswresample libswscale
@@ -305,4 +305,13 @@ func AvformatGetMovVideoTags() *AvCodecTag {
 // AvformatGetMovAudioTags Return the table mapping MOV FourCCs for audio to AvCodecID.
 func AvformatGetMovAudioTags() *AvCodecTag {
 	return (*AvCodecTag)(C.avformat_get_mov_audio_tags())
+}
+
+// Name Return name
+func (fmt *AvInputFormat) Name() string {
+	return C.GoString(fmt.name)
+}
+
+func (fmt *AvInputFormat) LongName() string {
+	return C.GoString(fmt.long_name)
 }
