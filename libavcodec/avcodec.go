@@ -1,8 +1,8 @@
 // Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 // Giorgis (habtom@giorgis.io)
 
-//Package libavcodec contains the codecs (decoders and encoders) provided by the libavcodec library
-//Provides some generic global options, which can be set on all the encoders and decoders.
+// Package libavcodec contains the codecs (decoders and encoders) provided by the libavcodec library
+// Provides some generic global options, which can be set on all the encoders and decoders.
 package libavcodec
 
 //#cgo pkg-config: libavformat libavcodec libavutil libswresample
@@ -227,4 +227,21 @@ func AvcodecDescriptorGet(id AvCodecID) *AvCodecDescriptor {
 // AvcodecDescriptorGetByName Return codec descriptor with the given name or NULL if no such descriptor exists.
 func AvcodecDescriptorGetByName(name string) *AvCodecDescriptor {
 	return (*AvCodecDescriptor)(C.avcodec_descriptor_get_by_name(C.CString(name)))
+}
+
+func (fmt *AvCodecDescriptor) LongName() string {
+	return C.GoString(fmt.long_name)
+}
+
+// GetChannelLayoutString 封装 av_get_channel_layout_string
+func GetChannelLayoutString(channelLayout uint64, channels int) string {
+	// 分配一个 C 字符串缓冲区
+	buf := (*C.char)(C.malloc(64))
+	defer C.free(unsafe.Pointer(buf))
+
+	// 调用 av_get_channel_layout_string
+	C.av_get_channel_layout_string(buf, 64, C.int(channels), C.uint64_t(channelLayout))
+
+	// 将 C 字符串转换为 Go 字符串
+	return C.GoString(buf)
 }
