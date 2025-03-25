@@ -10,25 +10,27 @@ package libavutil
 */
 import "C"
 
+type AvLogLevel int
+
 // AV_LOG_xxx
 const (
-	AvLogQuiet   = -8
-	AvLogPanic   = 0
-	AvLogFatal   = 8
-	AvLogError   = 16
-	AvLogWarning = 24
-	AvLogInfo    = 32
-	AvLogVerbose = 40
-	AvLogDebug   = 48
-	AvLogTrace   = 56
+	AvLogQuiet   AvLogLevel = -8
+	AvLogPanic   AvLogLevel = 0
+	AvLogFatal   AvLogLevel = 8
+	AvLogError   AvLogLevel = 16
+	AvLogWarning AvLogLevel = 24
+	AvLogInfo    AvLogLevel = 32
+	AvLogVerbose AvLogLevel = 40
+	AvLogDebug   AvLogLevel = 48
+	AvLogTrace   AvLogLevel = 56
 )
 
 // AvLogSetLevel Set the log level
-func AvLogSetLevel(level int) {
+func AvLogSetLevel(level AvLogLevel) {
 	C.av_log_set_level(C.int(level))
 }
 
 // AvLogGetLevel Get the current log level
-func AvLogGetLevel() int {
-	return int(C.av_log_get_level())
+func AvLogGetLevel() AvLogLevel {
+	return AvLogLevel(C.av_log_get_level())
 }
