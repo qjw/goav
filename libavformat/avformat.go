@@ -211,16 +211,16 @@ func AvAddIndexEntry(st *AvStream, pos, timestamp, int64, size, distance, flags 
 
 // AvURLSplit Split a URL string into components.
 func AvURLSplit(protoSize, authorizationSize, hostnameSize int, portPtr *int, pathSize int, url string) (proto, authorization, hostname, path string) {
-	cProto := (*C.char)(C.malloc(C.sizeof_char * C.ulong(protoSize)))
+	cProto := (*C.char)(C.malloc(MallocType(C.sizeof_char * C.ulong(protoSize))))
 	defer C.free(unsafe.Pointer(cProto))
 
-	cAuthorization := (*C.char)(C.malloc(C.sizeof_char * C.ulong(authorizationSize)))
+	cAuthorization := (*C.char)(C.malloc(MallocType(C.sizeof_char * C.ulong(authorizationSize))))
 	defer C.free(unsafe.Pointer(cAuthorization))
 
-	cHostname := (*C.char)(C.malloc(C.sizeof_char * C.ulong(hostnameSize)))
+	cHostname := (*C.char)(C.malloc(MallocType(C.sizeof_char * C.ulong(hostnameSize))))
 	defer C.free(unsafe.Pointer(cHostname))
 
-	cPath := (*C.char)(C.malloc(C.sizeof_char * C.ulong(pathSize)))
+	cPath := (*C.char)(C.malloc(MallocType(C.sizeof_char * C.ulong(pathSize))))
 	defer C.free(unsafe.Pointer(cPath))
 
 	cURL := C.CString(url)
@@ -240,7 +240,7 @@ func AvURLSplit(protoSize, authorizationSize, hostnameSize int, portPtr *int, pa
 
 // AvGetFrameFilename Return in 'buf' the path with 'd' replaced by a number.
 func AvGetFrameFilename(bufSize int, path string, number int) (ret int, buf string) {
-	cBuf := (*C.char)(C.malloc(C.sizeof_char * C.ulong(bufSize)))
+	cBuf := (*C.char)(C.malloc(MallocType(C.sizeof_char * C.ulong(bufSize))))
 	defer C.free(unsafe.Pointer(cBuf))
 
 	cPath := C.CString(path)
@@ -261,7 +261,7 @@ func AvFilenameNumberTest(fileName string) int {
 
 // AvSdpCreate Generate an SDP for an RTP session.
 func AvSdpCreate(ac **AvFormatContext, nFiles int, bufSize int) (ret int, buf string) {
-	cBuf := (*C.char)(C.malloc(C.sizeof_char * C.ulong(bufSize)))
+	cBuf := (*C.char)(C.malloc(MallocType(C.sizeof_char * C.ulong(bufSize))))
 	defer C.free(unsafe.Pointer(cBuf))
 
 	ret = int(C.av_sdp_create((**C.struct_AVFormatContext)(unsafe.Pointer(ac)),
